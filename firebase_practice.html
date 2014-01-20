@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  </head>
+   <body>
+   	    <!-- <div id="gameFull">Sorry, this game is full. Please start a different one.</div> -->
+
+    <div id='welcomeDiv'></div>
+    <form>
+	    <input type='text' id='player_id' placeholder='Name'>
+	    <input type='text' id='game_id' placeholder='Game'>
+	    <input type='submit' id='start_game' value='Start Game'>
+	</form>
+    <script>
+      var main = new Firebase('https://the-resistance.firebaseio.com/');
+      var gameRef = new Firebase('https://the-resistance.firebaseio.com/games');
+      // var playerRef = new Firebase('https://the-resistance.firebaseio.com/games/players');
+      // var usersRef = new Firebase('https://the-resistance.firebaseio.com/games/players/roles');
+      // var usersRef = new Firebase('https://the-resistance.firebaseio.com/games/players/roles');
+
+	// function Game(gameId) {
+	// 	this.game = gameId;
+	// }
+
+
+$(document).ready(function(){
+  $("form").submit(function() {
+    setGame();
+  })
+})
+
+function setGame () {
+
+	var game1 = startGame();
+	var player1 = playerSet();
+    
+    gameRef.on('value', function(snapshot) {
+      alert("hi");
+  			// if(snapshot.val() === null) {
+     //      alert("there are no games in progress")
+     //    } else {
+     //      alert(snapshot.child());
+     //    }
+  	});
+
+
+
+	//check the db if game1 alreayd exists save as variable
+	//if this variable exists, 
+	// if(game1 != 'undefined'){ 
+
+  var gameName = gameRef.child(game1);
+
+		if(gameName) {
+ 		gameName.push(game1);
+    // alert(gameRef);
+ 		}
+	// }
+	var playerName = gameName.child(player1);
+ 	playerName.set(player1);
+ 	playerName.child('role').set('spy');
+
+
+
+       // 	var players = gameName.push();
+      	// players.set({player: player1, role: 'spy'})
+}
+
+	// }
+
+function startGame() {
+    var gameId = $('#game_id').val();
+    return gameId;
+};
+
+function playerSet() {
+	var playerId = $('#player_id').val();
+	return playerId;
+};
+
+ //  	function player() {
+	// 	var player1 = playerSet();
+	// 	var playerName = playerRef.child(player1);
+ //    	if(playerName) {
+ //    		playerName.set(player1);
+ //    	}
+
+	// };
+
+      
+
+      // main.on('child_added', function(snapshot) {
+      //   var message = snapshot.val();
+      //   displayChatMessage(message.playerId, message.gameId);
+      // });
+      // function displayChatMessage(playerId, gameId) {
+      //   $('<div/>').prepend($('<em/>').text(playerId+' has joined the game')).appendTo($('#welcomeDiv'));
+      //   $('#welcomeDiv')[0].scrollTop = $('#welcomeDiv')[0].scrollHeight;
+      // };
+    
+    </script>
+  </body>
+</html>
+
+<!-- $('#game_id').val() -->
